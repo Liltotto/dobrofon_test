@@ -1,0 +1,101 @@
+.tags_editing_window {
+    width: 340px;
+    border: 1px solid rgb(237, 237, 237);
+    border-radius: 12px;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.12);
+
+    padding: 0px 6px 6px 6px;
+
+    &__choosed_tags {
+        margin: 0px -6px 0px -6px;
+        min-height: 82px;
+        background: rgb(245, 245, 245);
+        padding: 12px;
+        display: flex;
+        
+        flex-wrap: wrap;
+        gap: 8px;
+
+        &__item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: red;
+            border-radius: 5px;
+            padding: 4px 4px 4px 12px;
+            height: 25px;
+            gap: 4px;
+            //width: 55px;
+
+            &__name {
+
+                // height: 100%;
+                // width: 100%;
+                // display: flex;
+                // justify-content: center;
+                // align-items: center;
+
+                color: rgb(255, 255, 255);
+                font-family: SF Pro Display;
+                font-size: 14px;
+                font-weight: 600;
+
+            }
+
+            //  КАК РАБОТАЕТ КРЕСТ РАЗУЗНАТЬ СРОЧНЯКОВО
+
+            button {
+                padding: 0;
+                border: 0;
+                background-color: transparent;
+                display: flex;
+                align-items: center;
+                //display: flex;
+                //justify-content: center;
+                .cross {
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+
+
+        }
+    }
+
+    //ЭТОТ ДИВ НАДО НАЗВАТЬ КЛАССОМ И ПОДЕЛЮЧИТЬ ШРФИТЫ И ИЗМЕНИТЬ ПЛЮСИК
+
+    &__create_button {
+        padding: 12px 6px 8px 6px;
+        color: rgb(153, 153, 153);
+
+
+
+
+        .plus_and_text {
+            width: 87px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .create_text {
+                //font-family: SF Pro Display;
+                font-size: 12px;
+                font-weight: 600;
+                //line-height: 14px;
+                //letter-spacing: 0%;
+                //text-align: left;
+            }
+
+            .plus {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+    }
+
+    .list_of_tags {
+        list-style: none;
+        overflow: hidden;
+    }
+}

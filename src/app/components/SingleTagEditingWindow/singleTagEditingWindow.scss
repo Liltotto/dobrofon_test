@@ -1,0 +1,62 @@
+.single_tag_editing_window {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 150px;
+    border-radius: 12px;
+    padding: 12px 6px 6px 6px;
+    /* shadow */
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.18);
+
+
+    .name_input {
+        #name {
+            width: 100%;
+            border: 1px solid rgb(237, 237, 237);
+            border-radius: 8px;
+            padding: 0px 8px;
+
+        }
+    }
+
+    .colors_panel {
+        .color_block {
+            padding: 8px;
+            border: 1px solid rgb(237, 237, 237);
+            border-radius: 8px;
+        }
+    }
+
+    .delete_tag {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 0px 8px;
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
+
+        
+
+        .delete_tag__trashcan {
+            display: flex;
+        }
+
+        .delete_tag__text {
+            color: rgb(227, 61, 62);
+            font-family: SF Pro Display;
+            font-size: 12px;
+            font-weight: 700;
+        }
+    }
+
+
+}
+
+.inner_title {
+    color: rgb(153, 153, 153);
+    font-family: var(--var-inter);
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 4px;
+}
