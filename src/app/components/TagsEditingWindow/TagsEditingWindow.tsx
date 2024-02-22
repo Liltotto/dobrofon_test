@@ -26,6 +26,7 @@ export const TagsEditingWindow = (props: Props) => {
         { id: 3, name: 'Tag 3' },
     ]);
 
+    const [isScrollLocked, setScrollLocked] = useState(false);
     
 
     return (
