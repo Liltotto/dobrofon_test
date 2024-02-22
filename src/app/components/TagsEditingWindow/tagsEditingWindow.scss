@@ -44,7 +44,8 @@
 
             //  КАК РАБОТАЕТ КРЕСТ РАЗУЗНАТЬ СРОЧНЯКОВО
 
-            button {
+            .cross_button {
+                cursor: pointer;
                 padding: 0;
                 border: 0;
                 background-color: transparent;
@@ -67,35 +68,37 @@
     &__create_button {
         padding: 12px 6px 8px 6px;
         color: rgb(153, 153, 153);
-
-
-
-
-        .plus_and_text {
-            width: 87px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .create_text {
-                //font-family: SF Pro Display;
-                font-size: 12px;
-                font-weight: 600;
-                //line-height: 14px;
-                //letter-spacing: 0%;
-                //text-align: left;
-            }
-
-            .plus {
-                width: 16px;
-                height: 16px;
-            }
-        }
+        border: 0;
+        background-color: transparent;
+        cursor: pointer;
 
     }
 
     .list_of_tags {
         list-style: none;
         overflow: hidden;
+    }
+}
+
+.plus_and_text {
+    // width: 87px;
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    
+    .create_text {
+        
+        font-family: 'SF Pro Display';
+        font-size: 12px;
+        font-weight: 600;
+        //line-height: 14px;
+        //letter-spacing: 0%;
+        //text-align: left;
+    }
+
+    .plus {
+        width: 16px;
+        height: 16px;
     }
 }
