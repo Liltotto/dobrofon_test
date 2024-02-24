@@ -5,12 +5,20 @@ import { useState } from 'react';
 import './singleTagEditingWindow.scss'
 import { MyModal } from '../MyModal/MyModal';
 
+import visible from '@/app/store/singleTagVisibility';
+
 type Props = {
 
 };
 export const SingleTagEditingWindow = (props: Props) => {
 
     const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'grey'];
+
+    const clickHandlerThreeDots = (e: MouseEvent) => {
+        const rect = (e.target as HTMLElement).getBoundingClientRect();
+        console.log(rect.left, rect.top);
+        //setPositionOfPopup(popupPosition)
+    }
 
     const [currentColor, setCurrentColor] = useState('');
 
@@ -21,7 +29,10 @@ export const SingleTagEditingWindow = (props: Props) => {
     }
 
     return (
-        <div className="single_tag_editing_window">
+        <div
+            className="single_tag_editing_window"
+            onMouseLeave={() => visible.setVisible(false)}
+        >
             <div className="name_input">
                 <div className="inner_title">Имя</div>
                 <input type="text" name="name" id="name" />
@@ -55,8 +66,6 @@ export const SingleTagEditingWindow = (props: Props) => {
                         <button className='cancel_button'>Отмена</button>
                     </div>
                 </div>
-
-
             </MyModal>
         </div>
     );

@@ -6,10 +6,10 @@ import { TagsEditingWindow } from "./components/TagsEditingWindow/TagsEditingWin
 export default function Home() {
   return (
     <div className="Home">
-      <TagsEditingWindow/>
+      {/* <TagsEditingWindow/>
       <br />
       <SingleTagEditingWindow/>
-      <br />
+      <br /> */}
       <StartPage/>
     </div>
   );
