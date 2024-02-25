@@ -1,6 +1,5 @@
 // @flow 
 
-import { useRef } from 'react';
 import popUpCl from './myPopUpWindow.module.scss';
 
 type Props = {

@@ -122,6 +122,7 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
     }, [singleTagData.toDelete])
 
     useEffect(() => {
+        console.log(inputValue);
         if (!inputedTag) return
         setReservedTags([...reservedTags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'reserved'), color: inputedTag.color }])
 
@@ -214,8 +215,12 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
                 disabled={!detectEauality()}
                 className={`tags_editing_window__create_button ${detectEauality() ? 'active' : ''}`}
                 onClick={() => {
-                    setInputedTag({ id: reservedTags.length + 1, name: inputValue, color: colors[Math.floor(Math.random() * colors.length)] })
-                    setInputValue('')
+                    setTimeout(() => {
+                        setInputedTag({ id: reservedTags.length + 1, name: inputValue, color: colors[Math.floor(Math.random() * colors.length)] })
+                        setInputValue('')
+                    }, 0)
+                    
+                   
                 }}
             >
                 <div className="plus_and_text">

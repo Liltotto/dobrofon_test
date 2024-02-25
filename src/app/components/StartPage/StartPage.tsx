@@ -51,7 +51,7 @@ export const StartPage = observer((props: Props) => {
 
     const hoverHandlerTags = (e: MouseEvent) => {
         const rect = (e.target as HTMLElement).getBoundingClientRect();
-        setTagsListPopupPosition({ x: rect.left + window.scrollX - rect.width*0.4, y: rect.top + window.scrollY + rect.height*0.6 });
+        setTagsListPopupPosition({ x: rect.left + window.scrollX - rect.width*0.4, y: rect.top + window.scrollY + rect.height*0.65 });
     }
 
 
