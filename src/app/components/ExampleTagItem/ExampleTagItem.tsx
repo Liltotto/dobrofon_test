@@ -8,7 +8,8 @@ import { MouseEvent, useEffect, useRef, useState } from "react";
 
 import visible from "@/app/store/singleTagVisibility";
 import positioner from "@/app/store/singleTagPosition";
-//import { observe } from "mobx";
+import singleTagData from "@/app/store/singleTagData";
+
 import { observer } from "mobx-react";
 
 interface IItem {
@@ -17,24 +18,27 @@ interface IItem {
     color: string;
 }
 
+
+
 interface Props {
     item: IItem;
-    choosedTags: IItem[];
-    setChoosedTags: (arg0: IItem[]) => void;
+    elements: { id: number, tags: IItem[] }[];
+    setElements: (arg0: { id: number, tags: IItem[] }[]) => void;
+    currentIndex: number;
+    id: number;
+    inputValue: string;
 }
 
-export const ExampleTagItem = observer(({ choosedTags, setChoosedTags, item }: Props) => {
+export const ExampleTagItem = observer(({ elements, setElements, item, currentIndex, id, inputValue }: Props) => {
 
     const dragControls = useDragControls();
 
     const exampleTagRef = useRef<HTMLButtonElement>(null)
-    //const [visibleSingleTag, setVisibleSingleTag] = useState<boolean>(false);
 
     useEffect(() => {
         if (exampleTagRef.current && visible.visible) {
             const rect = exampleTagRef.current.getBoundingClientRect();
             positioner.setPosition({ x: rect.left + window.scrollX - rect.width * 2, y: rect.top + window.scrollY - rect.height * 9 });
-            //visible.setVisible(true)
         }
 
         if (!visible.visible) {
@@ -47,19 +51,49 @@ export const ExampleTagItem = observer(({ choosedTags, setChoosedTags, item }: P
         const rect = (e.target as HTMLElement).getBoundingClientRect();
         positioner.setPosition({ x: rect.left + window.scrollX, y: rect.top + window.scrollY + rect.height });
         visible.setVisible(true)
-        //setPositionOfPopup(popupPosition)
     }
 
     const detectEauality = () => {
-        if (!choosedTags) return
-        return !choosedTags.some(choosedTag => choosedTag.name === item.name)
+        return !elements[currentIndex].tags.some(tag => tag.name === item.name)
     }
 
     const clickHandlerExampleTag = () => {
-        
+
+        const updatedElements = elements.map(element => {
+            if (element.id === id) {
+                return { id: id, tags: [...element.tags, item] };
+            } else {
+                return element;
+            }
+        });
+
         if (detectEauality()) {
-            setChoosedTags([...choosedTags, item])
+            setElements(updatedElements)
         }
+    }
+
+
+    const tagNameColor = () => {
+
+        const backgroundColor = singleTagData.id === item.id ? singleTagData.color : item.color;
+        const tagName = singleTagData.id === item.id ? singleTagData.input_value : item.name;
+
+        return (
+            <div
+                onClick={clickHandlerExampleTag}
+                className="tag_name"
+                style={{ backgroundColor: backgroundColor }}
+            >
+                {tagName}
+            </div>
+        )
+    }
+
+    const clickHandlerDots = () => {
+        visible.setVisible(true)
+        singleTagData.setId(item.id)
+        singleTagData.setInputValue(item.name)
+        singleTagData.setColor(item.color)
     }
 
     const [isHovered, setIsHovered] = useState(false);
@@ -85,25 +119,16 @@ export const ExampleTagItem = observer(({ choosedTags, setChoosedTags, item }: P
             onDragEnd={() => {
                 setIsDragged(false)
             }}
-
-
-
             className={`list_of_tags__item ${isDragged || isHovered ? 'dragged' : ''}`}
         >
             <div className="dots_and_name">
-                <SixDotsIcon dragControls={dragControls} />
-                <div
-                    onClick={clickHandlerExampleTag}
-                    className="tag_name"
-                    style={{ backgroundColor: item.color }}
-                >
-                    {item.name}
-                </div>
+                {!inputValue.length ? <SixDotsIcon dragControls={dragControls} /> : null}
+                {tagNameColor()}
             </div>
             {isHovered &&
                 <button
                     className="three_dots"
-                    onClick={() => visible.setVisible(true)}
+                    onClick={clickHandlerDots}
                     ref={exampleTagRef}
                 >
                     <img src="/threeDots.svg" alt="three dots" />

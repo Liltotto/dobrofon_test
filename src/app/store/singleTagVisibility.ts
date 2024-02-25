@@ -1,8 +1,5 @@
 import { makeAutoObservable } from "mobx";
 
-// type Props = {
-//     setVisible: (arg0: boolean) => void
-// }
 
 class SingleTagVisibility {
     visible: boolean = false;

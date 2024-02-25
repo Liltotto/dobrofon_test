@@ -1,132 +1,139 @@
-.start_page {
-    position: relative;
+.wrapper {
+    height: 100%;
+    .start_page {
+        position: relative;
 
-    h1 {
-        color: rgb(55, 53, 48);
-        font-size: 36px;
-        font-weight: 700;
-        margin-bottom: 24px;
-    }
-
-    .tags_table_wrapper {
-        border-radius: 16px;
-        /* white */
-        background: rgb(255, 255, 255);
-        padding: 8px 16px;
-        box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.07);
-
-        .tags_table {
-            width: 100%;
-            border-collapse: collapse;
-
-            // border-spacing: 24px 0;
-            tr {
-                border-bottom: 1px solid rgb(237, 237, 237);
-
-                th+th,
-                td+td {
-                    padding-left: 24px;
-                }
-
-
-            }
-
-            thead {
-                tr {
-                    th {
-                        padding-top: 8px;
-                        padding-bottom: 8px;
-                        color: rgb(153, 153, 153);
-                        font-family: "SF Pro Text", sans-serif;
-                        font-size: 12px;
-                        font-weight: 400;
-                        text-align: left;
-                    }
-
-                    th:nth-child(1),
-                    th:nth-child(2) {
-                        width: auto;
-                    }
-
-                    th:nth-child(3) {
-                        width: 100%;
-                    }
-
-                    .id_th {
-                        min-width: 60px;
-                    }
-
-                    .tags_th {
-                        min-width: 202px;
-                    }
-                }
-            }
-
-            tbody {
-                tr {
-                    td {
-                        // position: relative;
-                        padding-top: 24px;
-                        padding-bottom: 24px;
-                    }
-
-
-
-                    .id_td {
-                        color: rgb(55, 53, 48);
-                        font-size: 14px;
-                        font-weight: 400;
-                    }
-
-                    .tags_td {
-
-                        // &::after{
-                        //     content: "-";
-                        //     width: 8px;
-                        //     height: 1px;
-                        //     background-color: rgb(55, 53, 48);
-                        // }
-
-                    }
-                }
-
-                tr:last-child {
-                    border-bottom: 0;
-                }
-
-            }
+        h1 {
+            color: rgb(55, 53, 48);
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 24px;
         }
 
-        .add_button {
+        .tags_table_wrapper {
+            border-radius: 16px;
+            /* white */
+            background: rgb(255, 255, 255);
+            padding: 8px 16px;
+            box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.07);
 
-            border: 0;
-            background-color: transparent;
-            white-space: nowrap;
-            color: rgb(153, 153, 153);
-            cursor: pointer;
+            .tags_table {
+                width: 100%;
+                border-collapse: collapse;
 
-            .plus_and_text {
-                .create_text {
-                    font-weight: 700;
+                // border-spacing: 24px 0;
+                tr {
+                    border-bottom: 1px solid rgb(237, 237, 237);
+
+                    th+th,
+                    td+td {
+                        padding-left: 24px;
+                    }
+
+
+                }
+
+                thead {
+                    tr {
+                        th {
+                            padding-top: 8px;
+                            padding-bottom: 8px;
+                            color: rgb(153, 153, 153);
+                            font-family: "SF Pro Text", sans-serif;
+                            font-size: 12px;
+                            font-weight: 400;
+                            text-align: left;
+                        }
+
+                        th:nth-child(1),
+                        th:nth-child(2) {
+                            width: auto;
+                        }
+
+                        th:nth-child(3) {
+                            width: 100%;
+                        }
+
+                        .id_th {
+                            min-width: 60px;
+                        }
+
+                        .tags_th {
+                            min-width: 202px;
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        height: 80px;
+
+                        //min-height: 80px;
+                        td {
+                            // position: relative;
+
+                            padding-top: 24px;
+                            padding-bottom: 24px;
+                        }
+
+
+
+                        .id_td {
+                            color: rgb(55, 53, 48);
+                            font-size: 14px;
+                            font-weight: 400;
+                        }
+
+                        .tags_td {
+
+                            // &::after{
+                            //     content: "-";
+                            //     width: 8px;
+                            //     height: 1px;
+                            //     background-color: rgb(55, 53, 48);
+                            // }
+
+                        }
+                    }
+
+                    tr:last-child {
+                        border-bottom: 0;
+                    }
+
+                }
+            }
+
+            .add_button {
+
+                border: 0;
+                background-color: transparent;
+                white-space: nowrap;
+                color: rgb(153, 153, 153);
+                cursor: pointer;
+
+                .plus_and_text {
+                    .create_text {
+                        font-weight: 700;
+                    }
                 }
             }
         }
     }
-}
 
-.tags_list {
-    display: flex;
-    width: auto;
-    gap: 8px;
-    
-    .tag_name {}
+    .tags_list {
+        display: flex;
+        max-width: 150px;
+        gap: 8px;
+        cursor: pointer;
+       
 
-    .tags_list__remaining {
-        border-radius: 6px;
-        /* Border/1 */
-        background: rgb(245, 245, 245);
-        padding: 4px 8px 4px 8px;
-        width: auto;
-        
+        .tags_list__remaining {
+            border-radius: 6px;
+            /* Border/1 */
+            background: rgb(245, 245, 245);
+            padding: 4px 8px 4px 8px;
+            width: auto;
+
+        }
     }
 }

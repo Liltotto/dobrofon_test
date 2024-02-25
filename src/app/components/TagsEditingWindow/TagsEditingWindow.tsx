@@ -12,6 +12,7 @@ import { ExampleTagItem } from '../ExampleTagItem/ExampleTagItem';
 
 import visible from '@/app/store/singleTagVisibility';
 import positioner from '@/app/store/singleTagPosition';
+import singleTagData from '@/app/store/singleTagData';
 
 import { MyPopUpWindow } from '../MyPopUpWindow/MyPopUpWindow';
 import { SingleTagEditingWindow } from '../SingleTagEditingWindow/SingleTagEditingWindow';
@@ -22,15 +23,14 @@ import { reverse } from 'dns';
 type Props = {
     colors: string[],
     id: number,
-    elements: { id: number, tags : { id: number, name: string, color: string }[] }[],
-    setElements: (arg0: { id: number,  tags : { id: number, name: string, color: string }[] }[]) => void
+    elements: { id: number, tags: { id: number, name: string, color: string }[] }[],
+    setElements: (arg0: { id: number, tags: { id: number, name: string, color: string }[] }[]) => void
 };
 
 
 
 export const TagsEditingWindow = observer(({ colors, id, elements, setElements }: Props) => {
 
-    // const colors = [' rgb(244, 98, 98)', 'rgb(252, 148, 74)', 'rgb(250, 208, 56)', 'rgb(71, 209, 124)', 'rgb(76, 178, 229)', 'rgb(110, 133, 247)', 'rgb(196, 125, 232)', 'rgb(153, 153, 153)'];
 
     const [reservedTags, setReservedTags] = useState<{ id: number, name: string, color: string }[]>([
         { id: 1, name: 'Tag 1', color: colors[0] },
@@ -43,70 +43,116 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
         { id: 8, name: 'Tag 8', color: colors[7] },
     ]);
 
-    const [choosedTags, setChoosedTags] = useState<{ id: number, name: string, color: string }[]>([
-        // { id: 1, name: 'Tag 1', color: colors[0] },
-        // { id: 2, name: 'Tag 2', color: colors[1] },
-        // { id: 3, name: 'Tag 3', color: colors[2] },
-        // { id: 4, name: 'T1', color: colors[3] },
-        // { id: 5, name: 'g 2', color: colors[4] },
-        // { id: 6, name: 'T 3', color: colors[5] },
-        // { id: 7, name: 'T1', color: colors[6] },
-        // { id: 8, name: '.', color: colors[7] },
-
-    ])
-
     const [inputedTag, setInputedTag] = useState<{ id: number, name: string, color: string }>();
 
     const [currentIndex, setCurrentIndex] = useState<number>(-1);
 
+
     useEffect(() => {
-        if(!inputedTag) return
+        const updatedReservedTags = reservedTags.map(tag => {
+            if (tag.id === singleTagData.id) {
+                return { id: tag.id, name: defineWidthOfTag(singleTagData.input_value, 'reserved'), color: singleTagData.color };
+            } else {
+                return tag;
+            }
+        });
+
+        setReservedTags(updatedReservedTags)
+
+    }, [singleTagData.color, singleTagData.id, singleTagData.input_value])
+
+    useEffect(() => {
+        const updatedElements = elements.map(element => {
+            if (element.id === id) {
+                let elementTags = element.tags;
+                let updatedTags: { id: number, name: string, color: string }[] = [];
+                let orderOfTags: number[] = []
+                for (const reservedTag of reservedTags) {
+                    const isTagAlreadyPresent = elementTags.some((tag, i) => {
+                        if (tag.id === reservedTag.id) {
+                            orderOfTags.push(i)
+                        }
+                        return tag.id === reservedTag.id
+                    });
+                    if (isTagAlreadyPresent) {
+                        updatedTags = [...updatedTags, { id: reservedTag.id, name: defineWidthOfTag(reservedTag.name, 'choosed'), color: reservedTag.color }];
+                    }
+                }
+
+                const indexedElements = orderOfTags.map((index, i) => ({ index, element: updatedTags[i] }));
+                indexedElements.sort((a, b) => a.index - b.index);
+                const sortedTags = indexedElements.map(item => item.element);
+                const finalSortedElements = sortedTags.filter(element => element !== undefined);
+
+                return { id: element.id, tags: [...finalSortedElements] };
+            } else {
+                let elementTags = element.tags;
+                let updatedTags: { id: number, name: string, color: string }[] = [];
+                let orderOfTags: number[] = []
+                for (const reservedTag of reservedTags) {
+                    const isTagAlreadyPresent = elementTags.some((tag, i) => {
+                        if (tag.id === reservedTag.id) {
+                            orderOfTags.push(i)
+                        }
+                        return tag.id === reservedTag.id
+                    });
+                    if (isTagAlreadyPresent) {
+                        updatedTags = [...updatedTags, { id: reservedTag.id, name: defineWidthOfTag(reservedTag.name, 'choosed'), color: reservedTag.color }];
+                    }
+                }
+
+                const indexedElements = orderOfTags.map((index, i) => ({ index, element: updatedTags[i] }));
+                indexedElements.sort((a, b) => a.index - b.index);
+                const sortedTags = indexedElements.map(item => item.element);
+                const finalSortedElements = sortedTags.filter(element => element !== undefined);
+
+                return { id: element.id, tags: [...finalSortedElements] };
+            }
+        });
+
+        setElements(updatedElements);
+    }, [reservedTags]);
+
+    useEffect(() => {
+        if (singleTagData.toDelete) {
+            setReservedTags(reservedTags.filter(tag => tag.id !== singleTagData.id))
+        }
+
+        singleTagData.setToDelete(false)
+    }, [singleTagData.toDelete])
+
+    useEffect(() => {
+        if (!inputedTag) return
         setReservedTags([...reservedTags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'reserved'), color: inputedTag.color }])
-        
-        setChoosedTags([...choosedTags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'choosed'), color: inputedTag.color }])
-        
-
-        //console.log(elements);
-
-        console.log('CURRENT ID', id);
-    }, [inputedTag])
-
-    // const updatedElements = elements.map(element => {
-    //     if (element.id === id) {
-    //         return { id: id, tags: [...element.tags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'choosed'), color: inputedTag.color }] };
-    //     } else {
-    //         return element;
-    //     }
-    // });
-
-    useEffect(() => {
-        
-        if(!inputedTag) return
-
-        // const updatedElements = elements.map(element => {
-        //     if (element.id === id) {
-        //         return { id: id, tags: [...element.tags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'choosed'), color: inputedTag.color }] };
-        //     } else {
-        //         return element;
-        //     }
-        // });
 
 
         const updatedElements = elements.map(element => {
             if (element.id === id) {
-                return { id: id, tags: [...choosedTags] };
+                return { id: id, tags: [...element.tags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'choosed'), color: inputedTag.color }] };
             } else {
                 return element;
             }
         });
 
-        setElements(updatedElements) //setElements([...elements, { id: id, tags: [...choosedTags] }])
-    }, [choosedTags])
+        setElements(updatedElements);
+    }, [inputedTag])
+
+    const deleteElements = (itemId: number) => {
+
+        const updatedElements = elements.map(element => {
+            if (element.id === id) {
+
+                return { id: id, tags: [...element.tags.filter(tag => tag.id !== itemId)] };
+            } else {
+                return element;
+            }
+        });
+
+        setElements(updatedElements)
+    }
 
     useEffect(() => {
         setCurrentIndex(elements.findIndex(element => element.id === id))
-        console.log('CURRENT INDEX ', id);
-        console.log(elements);
     }, [id])
 
     const [inputValue, setInputValue] = useState('');
@@ -116,46 +162,43 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
     }, [reservedTags, inputValue]);
 
     const detectEauality = () => {
-        if(!inputValue) return
+        if (!inputValue) return
         return !searchedPosts.some(item => item.name === inputValue)
     }
 
-    const defineWidthOfTag = (inputValue: string, typeOfTag: string)  => {
-        switch(typeOfTag) {
+    const defineWidthOfTag = (inputValue: string, typeOfTag: string) => {
+        switch (typeOfTag) {
             case 'choosed':
-                if(inputValue.length > 20 ) inputValue = inputValue.slice(0, 20) + '...'
+                if (inputValue.length > 13) inputValue = inputValue.slice(0, 13) + '...'
                 break
             case 'reserved':
-                if(inputValue.length > 10 ) inputValue = inputValue.slice(0, 10) + '...'
+                if (inputValue.length > 10) inputValue = inputValue.slice(0, 10) + '...'
                 break
         }
-        
+
         return inputValue
-        //return inputValue.length * 10
     }
-
-    // НАДО ТУТ ЮЗАНУТЬ MOBX ПО ЛЮБОМУ
-    const [isScrollLocked, setScrollLocked] = useState(false);
-
 
     return (
         <div className='tags_editing_window'>
             <div className="tags_editing_window__choosed_tags">
-                {choosedTags.map(item =>
+                {elements[currentIndex]?.tags.map(item =>
                     <div
-                     className='tags_editing_window__choosed_tags__item' 
-                     key={item.id}
-                     style={{ backgroundColor: item.color }}
-                     >
-                        <div 
-                        className="tags_editing_window__choosed_tags__item__name"
+                        className='tags_editing_window__choosed_tags__item'
+                        key={item.id}
+                        style={{ backgroundColor: item.color }}
+                    >
+                        <div
+                            className="tags_editing_window__choosed_tags__item__name"
                         >
                             {item.name}
                         </div>
-                        <button 
+                        <button
                             className='cross_button'
-                            onClick={() => setChoosedTags(choosedTags.filter(tag => tag.id !== item.id))} 
-                            >
+                            onClick={() => {
+                                deleteElements(item.id)
+                            }}
+                        >
                             <img className='cross' src="/cross.svg" alt="coss" />
                         </button>
                     </div>)}
@@ -167,14 +210,11 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
                 />
             </div>
 
-            <button 
+            <button
                 disabled={!detectEauality()}
                 className={`tags_editing_window__create_button ${detectEauality() ? 'active' : ''}`}
-                onClick={() => {    
+                onClick={() => {
                     setInputedTag({ id: reservedTags.length + 1, name: inputValue, color: colors[Math.floor(Math.random() * colors.length)] })
-                    // setReservedTags([...reservedTags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'reserved'), color: inputedTag.color }])
-                    // setChoosedTags([...choosedTags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'choosed'), color: inputedTag.color }])
-                    console.log(inputedTag);
                     setInputValue('')
                 }}
             >
@@ -188,13 +228,8 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
 
             </button>
             <Reorder.Group className='list_of_tags' axis='y' values={searchedPosts} onReorder={setReservedTags}>
-                {searchedPosts.map(item => <ExampleTagItem item={item} choosedTags={choosedTags} setChoosedTags={setChoosedTags} key={item.id} />)}
+                {searchedPosts.map(item => <ExampleTagItem item={item} currentIndex={currentIndex} elements={elements} setElements={setElements} id={id} key={item.id} inputValue={inputValue} />)}
             </Reorder.Group>
-
-            {/* {visible.visible && 
-            <MyPopUpWindow visible={visible.visible} setVisible={visible.setVisible} position={positioner.position} singleTag={true}>
-                <SingleTagEditingWindow />
-            </MyPopUpWindow>} */}
         </div>
     );
 })

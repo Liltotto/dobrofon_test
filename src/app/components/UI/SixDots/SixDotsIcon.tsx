@@ -1,16 +1,13 @@
-//'use client'
 
 import { DragControls } from "framer-motion";
 import './sixDotsIcon.scss'
-//import { useState } from "react";
+
 
 interface Props {
     dragControls: DragControls;
 }
 
 export function SixDotsIcon({ dragControls }: Props) {
-
-    //const [isDragged, setIsDragged] = useState(false);
 
     return (
         <svg
@@ -20,7 +17,6 @@ export function SixDotsIcon({ dragControls }: Props) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className="six_dots"
-            //className={isDragged ? 'active' : ''}
             onPointerDown={(event) => {
                 dragControls.start(event)
                 event.preventDefault()

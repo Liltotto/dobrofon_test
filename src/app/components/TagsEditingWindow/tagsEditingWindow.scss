@@ -1,4 +1,6 @@
 .tags_editing_window {
+
+
     width: 340px;
     border: 1px solid rgb(237, 237, 237);
     border-radius: 12px;
@@ -19,31 +21,20 @@
 
         &__item {
             display: flex;
-            //justify-content: space-between;
             align-items: center;
             background-color: red;
             border-radius: 5px;
             padding: 4px 4px 4px 12px;
             height: 25px;
             gap: 4px;
-            //width: 55px;
 
             &__name {
-
-                // height: 100%;
-                // width: 100%;
-                // display: flex;
-                // justify-content: center;
-                // align-items: center;
-
+                max-width: 150px;
                 color: rgb(255, 255, 255);
-                //font-family: SF Pro Display;
                 font-size: 14px;
                 font-weight: 600;
 
             }
-
-            //  КАК РАБОТАЕТ КРЕСТ РАЗУЗНАТЬ СРОЧНЯКОВО
 
             .cross_button {
                 cursor: pointer;
@@ -53,8 +44,6 @@
                 display: flex;
                 align-items: center;
 
-                //display: flex;
-                //justify-content: center;
                 .cross {
                     width: 16px;
                     height: 16px;
@@ -71,15 +60,11 @@
             border: 0;
             background: inherit;
             outline: 0;
-
             color: rgb(55, 53, 48);
-            //font-family: SF Pro Display;
             font-size: 14px;
             font-weight: 400;
         }
     }
-
-    //ЭТОТ ДИВ НАДО НАЗВАТЬ КЛАССОМ И ПОДЕЛЮЧИТЬ ШРФИТЫ И ИЗМЕНИТЬ ПЛЮСИК
 
     &__create_button {
         padding: 12px 6px 8px 6px;
@@ -88,29 +73,32 @@
         background-color: transparent;
         cursor: pointer;
 
-        &.active{
+        &.active {
             color: rgb(66, 129, 219);
-            .plus_and_text{
-                .plus{
-                    path{
+
+            .plus_and_text {
+                .plus {
+                    path {
                         fill: rgb(66, 129, 219);
                     }
                 }
             }
-            
+
         }
     }
 
     .list_of_tags {
         list-style: none;
-        overflow: hidden;
+        max-height: 800px;
+
+        overflow-y: auto;
     }
+
+
 }
 
 .plus_and_text {
-    // width: 87px;
     display: flex;
-    // justify-content: space-between;
     align-items: center;
     gap: 4px;
 
@@ -119,9 +107,6 @@
         font-family: 'SF Pro Display';
         font-size: 12px;
         font-weight: 600;
-        //line-height: 14px;
-        //letter-spacing: 0%;
-        //text-align: left;
     }
 
     .plus {

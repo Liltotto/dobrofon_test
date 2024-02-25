@@ -1,8 +1,6 @@
 .myPopUpWindow {
     position: absolute;
     display: none;
-    //z-index: 2;
-   // background-color: aqua;
 }
 
 .out_of_screen{
@@ -13,11 +11,7 @@
     z-index: 5;
 }
 
-.myPopUpWindowContent {}
 
 .myPopUpWindow.active {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     display: block;
 }

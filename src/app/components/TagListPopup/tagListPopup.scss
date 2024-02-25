@@ -1,0 +1,12 @@
+.tagListPopup {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 210px;
+    padding: 12px;
+    border-bottom: 1px solid rgb(237, 237, 237);
+    border-radius: 12px;
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.18);
+    background: rgb(255, 255, 255);
+}
