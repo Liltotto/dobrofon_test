@@ -218,9 +218,9 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
                     setTimeout(() => {
                         setInputedTag({ id: reservedTags.length + 1, name: inputValue, color: colors[Math.floor(Math.random() * colors.length)] })
                         setInputValue('')
-                    }, 0)
+                    }, 50)
                     
-                   
+                    
                 }}
             >
                 <div className="plus_and_text">
