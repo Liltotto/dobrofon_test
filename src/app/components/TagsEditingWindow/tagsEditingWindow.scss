@@ -12,8 +12,8 @@
         background: rgb(245, 245, 245);
         padding: 12px;
         display: flex;
-        border-top-right-radius:12px;
-        border-top-left-radius:12px;
+        border-top-right-radius: 12px;
+        border-top-left-radius: 12px;
         flex-wrap: wrap;
         gap: 8px;
 
@@ -37,7 +37,7 @@
                 // align-items: center;
 
                 color: rgb(255, 255, 255);
-                font-family: SF Pro Display;
+                //font-family: SF Pro Display;
                 font-size: 14px;
                 font-weight: 600;
 
@@ -52,6 +52,7 @@
                 background-color: transparent;
                 display: flex;
                 align-items: center;
+
                 //display: flex;
                 //justify-content: center;
                 .cross {
@@ -61,6 +62,20 @@
             }
 
 
+        }
+
+        &__input {
+            flex: 1;
+            min-width: 70px;
+            max-height: 25px;
+            border: 0;
+            background: inherit;
+            outline: 0;
+
+            color: rgb(55, 53, 48);
+            //font-family: SF Pro Display;
+            font-size: 14px;
+            font-weight: 400;
         }
     }
 
@@ -73,6 +88,17 @@
         background-color: transparent;
         cursor: pointer;
 
+        &.active{
+            color: rgb(66, 129, 219);
+            .plus_and_text{
+                .plus{
+                    path{
+                        fill: rgb(66, 129, 219);
+                    }
+                }
+            }
+            
+        }
     }
 
     .list_of_tags {
@@ -87,9 +113,9 @@
     // justify-content: space-between;
     align-items: center;
     gap: 4px;
-    
+
     .create_text {
-        
+
         font-family: 'SF Pro Display';
         font-size: 12px;
         font-weight: 600;

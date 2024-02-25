@@ -1,5 +1,6 @@
 .start_page {
     position: relative;
+
     h1 {
         color: rgb(55, 53, 48);
         font-size: 36px;
@@ -64,7 +65,7 @@
             tbody {
                 tr {
                     td {
-                       // position: relative;
+                        // position: relative;
                         padding-top: 24px;
                         padding-bottom: 24px;
                     }
@@ -110,5 +111,22 @@
                 }
             }
         }
+    }
+}
+
+.tags_list {
+    display: flex;
+    width: auto;
+    gap: 8px;
+    
+    .tag_name {}
+
+    .tags_list__remaining {
+        border-radius: 6px;
+        /* Border/1 */
+        background: rgb(245, 245, 245);
+        padding: 4px 8px 4px 8px;
+        width: auto;
+        
     }
 }

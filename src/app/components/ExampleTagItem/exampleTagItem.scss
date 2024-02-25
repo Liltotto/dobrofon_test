@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     border-radius: 8px;
+
     //transition: background-color 0.3s;
     //background-color: white;
     &:hover {
@@ -17,21 +18,13 @@
     padding: 8px 6px 8px 6px;
 
     .dots_and_name {
-        width: 83px;
+        //width: 83px;
         display: flex;
-        justify-content: space-between;
+        //justify-content: space-between;
+        gap: 8px;
         align-items: center;
 
-        .tag_name {
-            height: 25px;
-            width: 55px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: aqua;
-            border-radius: 5px;
-
-        }
+        
     }
 
     .three_dots {
@@ -40,4 +33,22 @@
         cursor: pointer;
     }
 
+}
+
+.tag_name {
+    height: 25px;
+    min-width: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //background-color: aqua;
+    padding: 4px 12px 4px 12px;
+    border-radius: 5px;
+   
+    cursor: pointer;
+
+    color: rgb(255, 255, 255);
+    //font-family: SF Pro Display;
+    font-size: 14px;
+    font-weight: 600;
 }

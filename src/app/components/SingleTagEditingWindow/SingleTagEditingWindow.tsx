@@ -8,11 +8,11 @@ import { MyModal } from '../MyModal/MyModal';
 import visible from '@/app/store/singleTagVisibility';
 
 type Props = {
-
+    colors: string[]
 };
-export const SingleTagEditingWindow = (props: Props) => {
+export const SingleTagEditingWindow = ({ colors }: Props) => {
 
-    const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'grey'];
+    //const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'grey'];
 
     const clickHandlerThreeDots = (e: MouseEvent) => {
         const rect = (e.target as HTMLElement).getBoundingClientRect();

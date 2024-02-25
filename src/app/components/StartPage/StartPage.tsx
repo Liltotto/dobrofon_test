@@ -1,11 +1,11 @@
 // @flow 
 'use client'
 
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 //import { table } from "console";
 import { MyPopUpWindow } from '../MyPopUpWindow/MyPopUpWindow';
 
-import visibler from "@/app/store/singleTagVisibility";
+import visibleSinleTag from "@/app/store/singleTagVisibility";
 import positioner from "@/app/store/singleTagPosition";
 
 import './startPage.scss'
@@ -23,22 +23,22 @@ export const StartPage = observer((props: Props) => {
     const [currentId, setCurrentId] = useState<number>(-1);
 
     const [visible, setVisible] = useState<boolean>(false);
-    
 
     //const [visibleSingleTag, setVisibleSingleTag] = useState<boolean>(false);
 
     const [popupPosition, setPopupPosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
 
+    const colors = [' rgb(244, 98, 98)', 'rgb(252, 148, 74)', 'rgb(250, 208, 56)', 'rgb(71, 209, 124)', 'rgb(76, 178, 229)', 'rgb(110, 133, 247)', 'rgb(196, 125, 232)', 'rgb(153, 153, 153)'];
+
     //const [tags, setTags] = useState([]);
 
-    const elements = [
+    const [elements, setElements] = useState<{ id: number, tags: { id: number, name: string, color: string }[] }[]>([
         { id: 1, tags: [] },
         { id: 2, tags: [] },
         { id: 3, tags: [] },
         { id: 4, tags: [] },
         { id: 5, tags: [] },
-        { id: 6, tags: [] },
-    ];
+    ]);
 
     const clickHandlerAddButton = (e: MouseEvent) => {
         const rect = (e.target as HTMLElement).getBoundingClientRect();
@@ -47,11 +47,26 @@ export const StartPage = observer((props: Props) => {
     }
 
 
+    const addTagRef = useRef<HTMLButtonElement>(null)
+    //const [visibleSingleTag, setVisibleSingleTag] = useState<boolean>(false);
+
+    // useEffect(() => {
+    //     if(addTagRef.current && visible) {
+    //         const rect = addTagRef.current.getBoundingClientRect();
+    //         positioner.setPosition({ x: rect.left + window.scrollX, y: rect.top + window.scrollY });
+    //         //visible.setVisible(true)
+    //     }
+
+
+
+    // }, [visible])
+
     const addTag = () => {
         return (
             <button
                 className='add_button'
                 onClick={clickHandlerAddButton}
+                ref={addTagRef}
             >
                 <div className="plus_and_text">
 
@@ -66,8 +81,37 @@ export const StartPage = observer((props: Props) => {
         )
     }
 
+    const TagsList = (tags: { id: number, name: string, color: string }[]) => {
+
+        // const currentIndex = elements.findIndex(element => element.id === currentId); // Find the index of the elements.
+
+        console.log(tags);
+
+        return (
+            <div className='tags_list'>
+                <div
+                    className="tag_name"
+                    style={{ backgroundColor: tags[tags.length - 1].color }}
+                    >
+                    {tags[tags.length - 1].name}
+                </div>
+
+                <div className="tags_list__remaining">
+                    +{tags.length - 1}
+                </div>
+
+            </div>
+        )
+    }
+
+
+
     return (
-        <div className="start_page" onClick={() => setVisible(false)}>
+        <div className="start_page" onClick={() => {
+            setCurrentId(-1)
+            visibleSinleTag.setVisible(false)
+            setVisible(false)
+        }}>
             <h1 className="title">Работа с тегами</h1>
             <div className="tags_table_wrapper">
                 <table className="tags_table">
@@ -85,12 +129,15 @@ export const StartPage = observer((props: Props) => {
                                 <td className='id_td'>{element.id}</td>
                                 <td className='tags_td'
                                     onMouseEnter={() => {
-                                        if(!visible) setCurrentId(element.id)
+                                        if (!visible) setCurrentId(element.id)
                                     }}
-                                    onMouseLeave={() => setCurrentId(-1)}
+                                    onMouseLeave={() => {
+                                        if (visible) return
+                                        setCurrentId(-1)
+                                    }}
                                     onClick={(event) => event.stopPropagation()}
                                 >
-                                    {currentId === element.id ? addTag() : <img src="/dash.svg" alt="dash" />}
+                                    {currentId === element.id ? addTag() : element.tags.length ? TagsList(element.tags) : <img src="/dash.svg" alt="dash" />}
                                 </td>
                             </tr>
                         ))}
@@ -99,13 +146,13 @@ export const StartPage = observer((props: Props) => {
             </div>
 
             <MyPopUpWindow visible={visible} setVisible={setVisible} position={popupPosition}>
-                <TagsEditingWindow />
+                <TagsEditingWindow id={currentId} colors={colors} setElements={setElements} elements={elements} />
             </MyPopUpWindow>
 
-            {visibler.visible && 
-            <MyPopUpWindow visible={visibler.visible} setVisible={visibler.setVisible} position={positioner.position} singleTag={true}>
-                <SingleTagEditingWindow />
-            </MyPopUpWindow>}
+
+            <MyPopUpWindow visible={visibleSinleTag.visible} setVisible={visibleSinleTag.setVisible} position={positioner.position} singleTag={true}>
+                <SingleTagEditingWindow colors={colors} />
+            </MyPopUpWindow>
         </div>
 
 
