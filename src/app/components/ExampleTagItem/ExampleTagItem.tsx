@@ -38,7 +38,7 @@ export const ExampleTagItem = observer(({ elements, setElements, item, currentIn
     useEffect(() => {
         if (exampleTagRef.current && visible.visible) {
             const rect = exampleTagRef.current.getBoundingClientRect();
-            positioner.setPosition({ x: rect.left + window.scrollX - rect.width * 2, y: rect.top + window.scrollY - rect.height * 9 });
+            positioner.setPosition({ x: rect.left + window.scrollX, y: rect.top + window.scrollY - rect.height * 8 });
         }
 
         if (!visible.visible) {

@@ -44,14 +44,15 @@ export const StartPage = observer((props: Props) => {
 
     const clickHandlerAddButton = (e: MouseEvent) => {
         const rect = (e.target as HTMLElement).getBoundingClientRect();
-        setPopupPosition({ x: rect.left + window.scrollX, y: rect.top + window.scrollY });
+        console.log(rect);
+        setPopupPosition({ x: rect.left + window.scrollX + rect.width*0.5, y: rect.top + window.scrollY + rect.height*1.5 });
         setVisible(true)
         setVisibleTagListPopup(false)
     }
 
     const hoverHandlerTags = (e: MouseEvent) => {
         const rect = (e.target as HTMLElement).getBoundingClientRect();
-        setTagsListPopupPosition({ x: rect.left + window.scrollX - rect.width*0.4, y: rect.top + window.scrollY + rect.height*0.65 });
+        setTagsListPopupPosition({ x: rect.left + window.scrollX, y: rect.top + window.scrollY + rect.height });
     }
 
 

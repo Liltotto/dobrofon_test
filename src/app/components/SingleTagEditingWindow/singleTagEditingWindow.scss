@@ -5,10 +5,8 @@
     width: 150px;
     border-radius: 12px;
     padding: 12px 6px 6px 6px;
-    /* shadow */
     box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.18);
     background-color: rgb(255, 255, 255);
-
 
     .name_input {
         #name {
@@ -17,9 +15,7 @@
             border: 1px solid rgb(237, 237, 237);
             border-radius: 8px;
             padding: 0px 8px;
-
             color: rgb(55, 53, 48);
-            //font-family: SF Pro Display;
             font-size: 14px;
             font-weight: 400;
 
@@ -35,11 +31,9 @@
             flex-wrap: wrap;
             gap: 8px;
 
-            .color {
-                //border: 2px solid rgb(71, 209, 124);
+            .color {      
                 border: 0;
                 cursor: pointer;
-                // outline: 2px solid;
                 outline-offset: 2px;
                 transition: all 0.05s;
                 height: 16px;
