@@ -84,7 +84,7 @@ export const ExampleTagItem = observer(({ elements, setElements, item, currentIn
                 className="tag_name"
                 style={{ backgroundColor: backgroundColor }}
             >
-                {tagName}
+                {tagName.length > 10 ? tagName.slice(0, 10) + '...' : tagName}
             </div>
         )
     }

@@ -7,17 +7,13 @@ import { Reorder } from 'framer-motion';
 
 import './tagsEditingWindow.scss'
 import { useEffect, useMemo, useState } from 'react';
-//import { SixDotsIcon } from '../UI/SixDots/SixDotsIcon';
+
 import { ExampleTagItem } from '../ExampleTagItem/ExampleTagItem';
 
-import visible from '@/app/store/singleTagVisibility';
-import positioner from '@/app/store/singleTagPosition';
 import singleTagData from '@/app/store/singleTagData';
 
-import { MyPopUpWindow } from '../MyPopUpWindow/MyPopUpWindow';
-import { SingleTagEditingWindow } from '../SingleTagEditingWindow/SingleTagEditingWindow';
 import { observer } from 'mobx-react';
-import { reverse } from 'dns';
+
 
 
 type Props = {
@@ -51,7 +47,7 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
     useEffect(() => {
         const updatedReservedTags = reservedTags.map(tag => {
             if (tag.id === singleTagData.id) {
-                return { id: tag.id, name: defineWidthOfTag(singleTagData.input_value, 'reserved'), color: singleTagData.color };
+                return { id: tag.id, name: singleTagData.input_value, color: singleTagData.color };
             } else {
                 return tag;
             }
@@ -75,7 +71,7 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
                         return tag.id === reservedTag.id
                     });
                     if (isTagAlreadyPresent) {
-                        updatedTags = [...updatedTags, { id: reservedTag.id, name: defineWidthOfTag(reservedTag.name, 'choosed'), color: reservedTag.color }];
+                        updatedTags = [...updatedTags, { id: reservedTag.id, name: reservedTag.name, color: reservedTag.color }];
                     }
                 }
 
@@ -97,7 +93,7 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
                         return tag.id === reservedTag.id
                     });
                     if (isTagAlreadyPresent) {
-                        updatedTags = [...updatedTags, { id: reservedTag.id, name: defineWidthOfTag(reservedTag.name, 'choosed'), color: reservedTag.color }];
+                        updatedTags = [...updatedTags, { id: reservedTag.id, name: reservedTag.name, color: reservedTag.color }];
                     }
                 }
 
@@ -122,14 +118,13 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
     }, [singleTagData.toDelete])
 
     useEffect(() => {
-        console.log(inputValue);
         if (!inputedTag) return
-        setReservedTags([...reservedTags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'reserved'), color: inputedTag.color }])
+        setReservedTags([...reservedTags, { id: inputedTag.id, name: inputedTag.name, color: inputedTag.color }])
 
 
         const updatedElements = elements.map(element => {
             if (element.id === id) {
-                return { id: id, tags: [...element.tags, { id: inputedTag.id, name: defineWidthOfTag(inputedTag.name, 'choosed'), color: inputedTag.color }] };
+                return { id: id, tags: [...element.tags, { id: inputedTag.id, name: inputedTag.name, color: inputedTag.color }] };
             } else {
                 return element;
             }
@@ -138,11 +133,15 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
         setElements(updatedElements);
     }, [inputedTag])
 
+
+    useEffect(() => {
+        setCurrentIndex(elements.findIndex(element => element.id === id))
+    }, [id])
+
     const deleteElements = (itemId: number) => {
 
         const updatedElements = elements.map(element => {
             if (element.id === id) {
-
                 return { id: id, tags: [...element.tags.filter(tag => tag.id !== itemId)] };
             } else {
                 return element;
@@ -152,9 +151,7 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
         setElements(updatedElements)
     }
 
-    useEffect(() => {
-        setCurrentIndex(elements.findIndex(element => element.id === id))
-    }, [id])
+  
 
     const [inputValue, setInputValue] = useState('');
 
@@ -164,7 +161,7 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
 
     const detectEauality = () => {
         if (!inputValue) return
-        return !searchedPosts.some(item => item.name === inputValue)
+        return !searchedPosts.length
     }
 
     const defineWidthOfTag = (inputValue: string, typeOfTag: string) => {
@@ -192,7 +189,7 @@ export const TagsEditingWindow = observer(({ colors, id, elements, setElements }
                         <div
                             className="tags_editing_window__choosed_tags__item__name"
                         >
-                            {item.name}
+                            {item.name.length > 13 ? item.name.slice(0, 13) + '...' : item.name}
                         </div>
                         <button
                             className='cross_button'

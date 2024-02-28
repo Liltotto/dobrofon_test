@@ -15,7 +15,6 @@ export const MyPopUpWindow = ({ children, visible, setVisible, position, singleT
 
     if (visible) {
         rootClasses.push(popUpCl.active);
-        console.log(position.x, position.y);
     }
 
     if (singleTag) {

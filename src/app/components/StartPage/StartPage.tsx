@@ -44,15 +44,14 @@ export const StartPage = observer((props: Props) => {
 
     const clickHandlerAddButton = (e: MouseEvent) => {
         const rect = (e.target as HTMLElement).getBoundingClientRect();
-        console.log(rect);
-        setPopupPosition({ x: rect.left + window.scrollX + rect.width*0.5, y: rect.top + window.scrollY + rect.height*1.5 });
+        setPopupPosition({ x: rect.left + window.scrollX + rect.width * 0.5, y: rect.top + window.scrollY + rect.height * 1.5 });
         setVisible(true)
         setVisibleTagListPopup(false)
     }
 
     const hoverHandlerTags = (e: MouseEvent) => {
-        const rect = (e.target as HTMLElement).getBoundingClientRect();
-        setTagsListPopupPosition({ x: rect.left + window.scrollX, y: rect.top + window.scrollY + rect.height });
+        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+        setTagsListPopupPosition({ x: rect.left + window.scrollX, y: rect.top + window.scrollY + rect.height * 1.2 });
     }
 
 
@@ -79,24 +78,41 @@ export const StartPage = observer((props: Props) => {
     }
 
     const TagsList = (tags: { id: number, name: string, color: string }[]) => {
-          return (
+        return (
             <div className='tags_list'
                 onClick={clickHandlerAddButton}
-                ref={addTagRef}>
+                ref={addTagRef}
+                onMouseEnter={(e) => {
+                    if (tags.length) {
+                        setVisibleTagListPopup(true)
+                        setTagsForTagListPopup(tags)
+                        hoverHandlerTags(e)
+                    }
+                }
+                }
+                onMouseLeave={(e) => {
+                    if (tags.length) {
+                        setVisibleTagListPopup(false)
+                        setTagsForTagListPopup([])
+
+                    }
+                }}
+            >
                 <div
                     className="tag_name"
                     style={{ backgroundColor: tags[tags.length - 1].color }}
+
                 >
-                    {tags[tags.length - 1].name}
+                    {tags[tags.length - 1].name.length > 10 ? tags[tags.length - 1].name.slice(0, 10) + '...' : tags[tags.length - 1].name}
                 </div>
 
-                {tags.length - 1 > 0 ?
-                    <div className="tags_list__remaining">
-                        +{tags.length - 1}
-                    </div> : null}
-
-
-            </div>
+                {
+                    tags.length - 1 > 0 ?
+                        <div className="tags_list__remaining">
+                            +{tags.length - 1}
+                        </div> : null
+                }
+            </div >
         )
     }
 
@@ -128,21 +144,21 @@ export const StartPage = observer((props: Props) => {
                                         onMouseEnter={(e) => {
                                             if (visible) return
                                             setCurrentId(element.id)
-                                            if (element.tags.length) {
-                                                setVisibleTagListPopup(true)
-                                                setTagsForTagListPopup(element.tags)
-                                                hoverHandlerTags(e)
-                                            }
+                                            // if (element.tags.length) {
+                                            //     setVisibleTagListPopup(true)
+                                            //     setTagsForTagListPopup(element.tags)
+                                            //     hoverHandlerTags(e)
+                                            // }
 
                                         }}
                                         onMouseLeave={() => {
                                             if (visible) return
                                             setCurrentId(-1)
-                                            if (element.tags.length) {
-                                                setVisibleTagListPopup(false)
-                                                setTagsForTagListPopup([])
+                                            // if (element.tags.length) {
+                                            //     setVisibleTagListPopup(false)
+                                            //     setTagsForTagListPopup([])
 
-                                            }
+                                            // }
 
                                         }}
                                         onClick={(event) => event.stopPropagation()}
